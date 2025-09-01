@@ -73,4 +73,4 @@ SINGLE_USER_CREDENTIALS_PASSWORD=passwordpasswordpassword
 ```
 
 ## Output
-[output](output.png)
+<img width="752" height="525" alt="output" src="https://github.com/theapphiker/weather-app/blob/main/output.png/">
