@@ -1,0 +1,90 @@
+services:
+  pg:
+    build:
+      context: ./postgres/
+      dockerfile: Dockerfile.postgres
+    container_name: postgis_container_prod
+    restart: always
+    volumes:
+      - pg_data_prod:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    networks:
+      - weather-network
+  nifi:
+    build:
+      context: ./nifi/
+      dockerfile: Dockerfile.nifi
+    container_name: nifi_1_prod
+    restart: always
+    ports:
+      - 8443:8443
+    depends_on:
+      - weather-app
+    environment:
+      - SINGLE_USER_CREDENTIALS_USERNAME=${SINGLE_USER_CREDENTIALS_USERNAME}
+      - SINGLE_USER_CREDENTIALS_PASSWORD=${SINGLE_USER_CREDENTIALS_PASSWORD}
+    volumes:
+      - nifi_data_prod:/opt/nifi/nifi-current/data
+      - nifi_conf_prod:/opt/nifi/nifi-current/conf
+      - nifi_content_prod:/opt/nifi/nifi-current/content_repository
+      - nifi_flowfile_prod:/opt/nifi/nifi-current/flowfile_repository
+      - nifi_provenance_prod:/opt/nifi/nifi-current/provenance_repository
+    networks:
+      - weather-network
+
+  fastapi:
+    build:
+      context: ./fastapi/
+      dockerfile: Dockerfile.fastapi
+    container_name: fastapi-container-prod
+    restart: always
+    ports:
+      - 8000:8000
+    depends_on:
+      - pg
+    environment:
+      - URL_DATABASE=${URL_DATABASE}
+    networks:
+      - weather-network
+
+  weather-app:
+    build:
+      context: ./app/
+      dockerfile: Dockerfile.app
+    container_name: weather-app-prod
+    restart: always
+    ports:
+      - 8501:8501
+    depends_on:
+      - fastapi
+    networks:
+      - weather-network
+
+  nginx:
+    build:
+      context: ./nginx/
+      dockerfile: Dockerfile.nginx
+    container_name: nginx_prod
+    restart: always
+    ports:
+      - 8080:80
+    depends_on:
+      - weather-app
+    networks:
+      - weather-network
+
+volumes:
+  nifi_conf_prod:
+  nifi_content_prod:
+  nifi_flowfile_prod:
+  nifi_provenance_prod:
+  nifi_data_prod:
+  pg_data_prod:
+
+networks:
+  weather-network:
+    driver: bridge

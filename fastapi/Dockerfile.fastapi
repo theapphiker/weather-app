@@ -1,0 +1,17 @@
+# Use a Python base image
+FROM python:3.13-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+
+# Copy requirements.txt and install Python dependencies
+COPY fastapi_reqs.txt .
+RUN pip install --no-cache-dir -r fastapi_reqs.txt
+
+# Copy Python
+COPY app.py .
+
+EXPOSE 8000
+
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
