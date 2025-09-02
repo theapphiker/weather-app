@@ -49,7 +49,7 @@ psql -U admin -d weather
 
 6. Login into Apache NiFi and import the NiFi flow that is stored in the nifi folder.
 
-7. Set up the controller services in NiFi as required with the following commands adjusted with your configuration as necessary. Start all processors.
+7. Set up the controller services in NiFi as required with the following commands adjusted with your configuration as necessary. Start all processors. You can set the variables as parameters for ease and security.
 ```
 Database Connection URL: jdbc:postgresql://postgis_container_prod:5432/weather
 Database Driver Class Name: org.postgresql.Driver
@@ -61,7 +61,9 @@ Password: passwordpasswordpassword
 
 ### Configuration
 1. The NWS API does not require an API key. However, in the InvokeHTTP processors in NiFi that access the API, change 'user@domain.com' to your email address in the Request User-Agent property.
-```Request User-Agent: (myweatherapp, user@domain.com)```
+```
+Request User-Agent: (myweatherapp, user@domain.com)
+```
 
 2. Set up your credentials in .env and commands.sql.
 ```
