@@ -48,6 +48,7 @@ services:
       - pg
     environment:
       - URL_DATABASE=${URL_DATABASE}
+      - API_KEY=${API_KEY}
     networks:
       - weather-network
 
@@ -61,6 +62,8 @@ services:
       - 8501:8501
     depends_on:
       - fastapi
+    environment:
+      - API_KEY=${API_KEY}
     networks:
       - weather-network
 

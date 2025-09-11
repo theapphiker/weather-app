@@ -1,9 +1,18 @@
 import asyncpg
 import os
-from fastapi import FastAPI
+from fastapi.security import APIKeyHeader
+from fastapi import FastAPI, Depends, HTTPException
 from contextlib import asynccontextmanager
 
 db_connect = os.getenv("URL_DATABASE")
+api_secret_key = os.getenv("API_KEY")
+
+header_scheme = APIKeyHeader(name="X-API-Key", auto_error=True)
+
+def verify_api_key(api_key: str = Depends(header_scheme)):
+    if api_key != api_secret_key:
+        raise HTTPException(status_code=403, detail="Invalid API Key")
+    return api_key
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -11,7 +20,7 @@ async def lifespan(app: FastAPI):
     yield
     await app.state.db_pool.close()
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(lifespan=lifespan, dependencies=[Depends(verify_api_key)])
 
 @app.get("/")
 async def get_zones():
@@ -30,8 +39,8 @@ async def get_zones():
                 FROM dev.zones z
                 JOIN cte c
                 ON z.id = c.id
-				JOIN dev.geometries g
-				ON z.id = g.id;"""
+                JOIN dev.geometries g
+                ON z.id = g.id;"""
         rows = await conn.fetch(query)
         return [dict(row) for row in rows]
 

@@ -3,10 +3,13 @@ import streamlit as st
 import geopandas as gpd
 import requests
 from shapely import wkt
+import os
 
 from streamlit_folium import folium_static
 
-r = requests.get("http://fastapi-container-prod:8000/")
+api_key = os.getenv("API_KEY")
+headers = {"X-API-Key": api_key}
+r = requests.get("http://fastapi-container-prod:8000/", headers=headers)
 
 data = r.json()
 

@@ -72,6 +72,7 @@ POSTGRES_USER=admin
 POSTGRES_PASSWORD=passwordpassword
 SINGLE_USER_CREDENTIALS_USERNAME=admin
 SINGLE_USER_CREDENTIALS_PASSWORD=passwordpasswordpassword
+API_KEY=mysecretkey
 ```
 
 ## Output
