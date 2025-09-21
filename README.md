@@ -49,14 +49,12 @@ psql -U admin -d weather
 
 6. Login into Apache NiFi and import the NiFi flow that is stored in the nifi folder.
 
-7. Change the parameters in the weatherFlow parameter context as necessary - especially if you changed the passwords in the  commands.sql file. Start all processors. 
+7. Change the parameters in the weatherFlow parameter context as necessary - especially if you changed the passwords in the commands.sql file. Start all processors. 
 
 8. View the map at http://localhost:8080.
 
 ### Configuration
-1. The NWS API does not require an API key, but does require an email address in the header. Change the email parameter in the weatherFlow paramter context.
-
-2. Set up your credentials in .env and commands.sql.
+1. Set up your credentials in .env and commands.sql.
 ```
 URL_DATABASE=postgresql://weather_app:passwordpasswordpassword@postgis_container_prod:5432/weather
 POSTGRES_USER=admin
@@ -65,6 +63,8 @@ SINGLE_USER_CREDENTIALS_USERNAME=admin
 SINGLE_USER_CREDENTIALS_PASSWORD=passwordpasswordpassword
 API_KEY=mysecretkey
 ```
+
+2. The NWS API does not require an API key, but does require an email address in the header. Change the email parameter in the weatherFlow paramter context.
 
 ## Output
 <img width="752" height="525" alt="output" src="https://github.com/theapphiker/weather-app/blob/main/output.png/">
