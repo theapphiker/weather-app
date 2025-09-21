@@ -1,5 +1,4 @@
 CREATE SCHEMA dev;
-CREATE SCHEMA prod;
 
 CREATE EXTENSION postgis;
 

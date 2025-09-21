@@ -28,7 +28,7 @@ cd weather-app
 
 3. Start the Docker containers.
 ```
-docker compose up
+docker compose up -d
 ```
 
 4. Enter into the PostGIS container.
@@ -36,7 +36,7 @@ docker compose up
 docker exec -it postgis_container_prod bash
 ```
 
-5. Run the following commands in psql.
+5. Run the following commands in psql. Changes the passwords in the commands.sql as necessary.
 ```
 psql -U admin -c "CREATE DATABASE weather;"
 ```
@@ -49,18 +49,12 @@ psql -U admin -d weather
 
 6. Login into Apache NiFi and import the NiFi flow that is stored in the nifi folder.
 
-7. Set up the controller services in NiFi as required with the following commands adjusted with your configuration as necessary. Start all processors. You can set the variables as parameters for ease and security.
-```
-Database Connection URL: jdbc:postgresql://postgis_container_prod:5432/weather
-Database Driver Class Name: org.postgresql.Driver
-Database User: nifi
-Password: passwordpasswordpassword
-```
+7. Change the parameters in the weatherFlow parameter context as necessary - especially if you changed the passwords in the  commands.sql file. Start all processors. 
 
 8. View the map at http://localhost:8080.
 
 ### Configuration
-1. The NWS API does not require an API key, but does require an email address in the header. Create a parameter context with an 'email' parameter with your email and apply it recursively to the WeatherAppETL process group.
+1. The NWS API does not require an API key, but does require an email address in the header. Change the email parameter in the weatherFlow paramter context.
 
 2. Set up your credentials in .env and commands.sql.
 ```
