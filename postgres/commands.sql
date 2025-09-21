@@ -29,9 +29,7 @@ CONSTRAINT unique_forecasts UNIQUE (id, period)
 CREATE INDEX geometries_idx ON dev.geometries USING GIST (geom);
 
 GRANT CONNECT ON DATABASE weather TO nifi;
-GRANT ALL PRIVILEGES ON DATABASE weather TO nifi;
 GRANT USAGE ON SCHEMA dev TO nifi;
-GRANT ALL PRIVILEGES ON SCHEMA dev TO nifi;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA dev TO nifi;
 GRANT CONNECT ON DATABASE weather TO weather_app;
 GRANT USAGE ON SCHEMA dev TO weather_app;
