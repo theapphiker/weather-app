@@ -60,10 +60,7 @@ Password: passwordpasswordpassword
 8. View the map at http://localhost:8080.
 
 ### Configuration
-1. The NWS API does not require an API key. However, in the InvokeHTTP processors in NiFi that access the API, change 'user@domain.com' to your email address in the Request User-Agent property.
-```
-Request User-Agent: (myweatherapp, user@domain.com)
-```
+1. The NWS API does not require an API key, but does require an email address in the header. Create a parameter context with an 'email' parameter with your email and apply it recursively to the WeatherAppETL process group.
 
 2. Set up your credentials in .env and commands.sql.
 ```
