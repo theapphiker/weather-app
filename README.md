@@ -5,6 +5,7 @@ This repository contains code for building a simple weather forecast map for the
 ## Technologies Used
 - Docker
 - Apache NiFi
+- Apache NiFi Registry
 - PostgreSQL/PostGIS
 - Streamlit with Folium
 - Python
@@ -65,6 +66,8 @@ API_KEY=mysecretkey
 ```
 
 2. The NWS API does not require an API key, but does require an email address in the header. Change the email parameter in the weatherFlow paramter context.
+
+3. Once the WeatherAppETL flow is loaded in NiFi, create a new bucket in NiFi Registry. Then you can start version control for the WeatherAppETL process group in NiFi.
 
 ## Output
 <img width="752" height="525" alt="output" src="https://github.com/theapphiker/weather-app/blob/main/output.png/">

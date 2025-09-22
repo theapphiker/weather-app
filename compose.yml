@@ -79,6 +79,16 @@ services:
       - weather-app
     networks:
       - weather-network
+  
+  nifi-registry:
+    image: apache/nifi-registry:latest
+    container_name: nifi-registry
+    ports:
+      - 18080:18080
+    depends_on:
+      - nifi
+    networks:
+      - weather-network
 
 volumes:
   nifi_conf_prod:
